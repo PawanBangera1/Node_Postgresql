@@ -12,6 +12,9 @@ export const createUser = async (req, res, next) => {
     const { name, email } = req.body;
     try {
         const newUser = await createUserModel(name, email);
+        if(!newUser) {
+            return handleResponse(res, 400, 'Failed to create user');
+        }
         handleResponse(res, 201, 'User created successfully', newUser);
     } catch (err) {
         next(err);     
